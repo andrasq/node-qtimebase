@@ -17,6 +17,8 @@
  * which at 6m calls / sec is the equivalent of 240 Date.now() calls / ms.
  * I.e., the default interval threads are somewhat expensive.
  * Setting+clearing an interval timer is 250k/s (v0.10) or 100k/s (v5.8).
+ *
+ * This package was originally distributed as part of qcache.
  */
 
 module.exports = {
