@@ -1,0 +1,32 @@
+{
+  "name": "qtimebase",
+  "version": "0.0.0",
+  "description": "fast source of millisecond timestamps",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andrasq/node-qtimebase"
+  },
+  "main": "qtimebase.js",
+  "author": {
+    "name": "Andras",
+    "url": "http://github.com/andrasq"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "scripts": {
+    "test": "qnit test-*"
+  },
+  "keywords": [
+    "Andras",
+    "fast",
+    "timestamps",
+    "adaptive"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "qnit": "0.13.0"
+  }
+}
