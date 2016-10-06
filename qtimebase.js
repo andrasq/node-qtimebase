@@ -19,11 +19,11 @@
  * Setting+clearing an interval timer is 250k/s (v0.10) or 100k/s (v5.8).
  */
 
-module.exports = getTimestampAdaptive;
-
-// function getTimestampBasic( ) {
-//     return Date.now();
-// }
+module.exports = {
+    getTimestamp: getTimestampAdaptive,
+    reset: reset,
+    isIntervalMode: isIntervalMode,
+}
 
 
 var _timestamp;         // current time
@@ -63,12 +63,12 @@ function getTimestampAdaptive( ) {
     }
 }
 
-getTimestampAdaptive.reset = function( ) {
+function reset( ) {
     _timestamp = null;
     if (_timer) { clearInterval(_timer); _timer = null; }
     _load = 0;
 };
 
-getTimestampAdaptive.isIntervalMode = function( ) {
+function isIntervalMode( ) {
     return _timer ? true : false;
 };
