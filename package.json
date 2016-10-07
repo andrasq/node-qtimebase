@@ -1,6 +1,6 @@
 {
   "name": "qtimebase",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "fast source of millisecond timestamps",
   "license": "Apache-2.0",
   "repository": {
