@@ -17,9 +17,7 @@ var _maxGcDelay = 2;
 
 module.exports = {
     setUp: function(done) {
-        // FIXME: nodeunit 0.9.0 bug: if same file is run more than once,
-        // the setUp method is called only on the first run!! not 2nd and later
-        if (getTimestamp.reset) getTimestamp.reset();
+        if (qtimebase.reset) qtimebase.reset();
         done();
     },
 
@@ -35,7 +33,7 @@ module.exports = {
     },
 
     'should return current timestamp': function(t) {
-        if (getTimestamp.reset) getTimestamp.reset();
+        if (qtimebase.reset) qtimebase.reset();
         var t1 = Date.now();
         var ts = getTimestamp();
         var t2 = Date.now();
@@ -45,31 +43,31 @@ module.exports = {
     },
 
     'making lots of calls should switch to interval timer mode': function(t) {
-        if (!getTimestamp.isIntervalMode) return t.done();
-        getTimestamp.reset();
-        t.ok(!getTimestamp.isIntervalMode(), "how is it already in interval mode ?!");
+        if (!qtimebase.isIntervalMode) return t.done();
+        qtimebase.reset();
+        t.ok(!qtimebase.isIntervalMode(), "how is it already in interval mode ?!");
         for (var i=0; i<4000; i++) getTimestamp();
-        t.ok(getTimestamp.isIntervalMode());
+        t.ok(qtimebase.isIntervalMode());
         t.done();
     },
     
     'not making calls should revert to one-at-a-time mode': function(t) {
-        if (!getTimestamp.isIntervalMode) return t.done();
-        getTimestamp.reset();
+        if (!qtimebase.isIntervalMode) return t.done();
+        qtimebase.reset();
         t.expect(2);
         for (var i=0; i<4000; i++) getTimestamp();
-        t.ok(getTimestamp.isIntervalMode());
+        t.ok(qtimebase.isIntervalMode());
         setTimeout(function(){
             // note: node-v0.10.29 can run this 6ms after the loop (vs 10),
             // which is not enough to expire interval mode.  Pad to 20.
-            t.ok(!getTimestamp.isIntervalMode());
+            t.ok(!qtimebase.isIntervalMode());
             t.done();
         }, 20);
     },
 
     'should return current timestamp in interval timer mode': function(t) {
-        if (!getTimestamp.isIntervalMode) return t.done();
-        getTimestamp.reset();
+        if (!qtimebase.isIntervalMode) return t.done();
+        qtimebase.reset();
         for (var i=0; i<4000;  i++) getTimestamp();
         setTimeout(function() {
             var t1 = Date.now();
@@ -83,11 +81,12 @@ module.exports = {
     },
 
     'should return current timestamp after interval timer mode': function(t) {
-        if (!getTimestamp.isIntervalMode) return t.done();
-        getTimestamp.reset();
+        if (!qtimebase.isIntervalMode) return t.done();
+        qtimebase.reset();
         for (var i=0; i<4000;  i++) getTimestamp();
+        t.ok(qtimebase.isIntervalMode());
         setTimeout(function() {
-            if (getTimestamp.isIntervalMode) t.ok(getTimestamp.isIntervalMode);
+            t.ok(!qtimebase.isIntervalMode());
             var t1 = Date.now();
             var ts = getTimestamp();
             var t2 = Date.now();
